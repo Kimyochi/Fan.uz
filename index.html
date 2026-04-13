@@ -1,73 +1,155 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fan.uz | Ilm-fan platformasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Fan.uz | Mukammal ilm-fan platformasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #0a0f2a, #0a1a3a); color: white; min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 30px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo { font-size: 24px; font-weight: bold; color: #ffd700; }
-        .nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
-        .nav a { color: #ffd700; cursor: pointer; padding: 8px 16px; background: rgba(0,0,0,0.3); border-radius: 30px; text-decoration: none; }
-        .btn { background: #ffd700; color: #000; padding: 10px 25px; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; }
-        .card { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
-        .fan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-        .fan-card { background: rgba(0,0,0,0.4); border-radius: 15px; padding: 15px; cursor: pointer; border-left: 4px solid #ffd700; transition: 0.3s; }
-        .fan-card:hover { transform: translateY(-5px); background: rgba(255,215,0,0.15); }
-        .fan-name { font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; }
-        .submenu { display: none; margin-top: 15px; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px; }
-        .submenu.open { display: grid; }
-        .sub-item { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; }
-        .sub-item:hover { background: rgba(255,215,0,0.3); }
-        .progress-bar { width: 100%; background: #333; border-radius: 20px; height: 15px; overflow: hidden; margin: 10px 0; }
-        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ffd700, #ff8800); border-radius: 20px; transition: width 0.5s; }
-        .auth-card { background: rgba(0,0,0,0.6); border-radius: 20px; padding: 40px; max-width: 400px; margin: 100px auto; text-align: center; border: 1px solid #ffd700; }
-        .auth-card input { width: 100%; padding: 14px; margin: 12px 0; border-radius: 30px; border: none; background: rgba(255,255,255,0.1); color: white; }
-        .auth-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .auth-tabs button { flex: 1; padding: 12px; background: rgba(255,255,255,0.2); color: white; border: none; border-radius: 30px; cursor: pointer; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a0f2a, #0a1a3a); color: #eef; min-height: 100vh; transition: all 0.3s ease; }
+        body.light { background: linear-gradient(135deg, #f5f5f5, #e8e8e8); color: #1a1a2e; }
+        body.light .card, body.light .auth-card, body.light .fan-card, body.light .sub-item { background: rgba(0,0,0,0.06); backdrop-filter: none; }
+        body.light .navbar { background: rgba(200,200,200,0.9); }
+        body.light .nav-links a { color: #1a1a2e; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        .navbar { background: rgba(10,20,40,0.95); backdrop-filter: blur(12px); border-radius: 60px; padding: 12px 25px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border: 1px solid rgba(255,215,0,0.3); }
+        .logo { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #ffd700, #ffaa00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .nav-links { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .nav-links a { color: #eef; text-decoration: none; padding: 8px 18px; border-radius: 40px; transition: 0.3s; cursor: pointer; font-size: 14px; font-weight: 500; }
+        .nav-links a:hover { background: rgba(255,215,0,0.2); color: #ffd700; transform: translateY(-2px); }
+        .user-badge { background: #ffd700; color: #0a0f2a; padding: 8px 20px; border-radius: 50px; font-weight: bold; display: flex; align-items: center; gap: 12px; }
+        .user-badge img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+        .btn { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #0a0f2a; padding: 8px 20px; border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; margin: 5px; font-size: 13px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,215,0,0.4); }
+        .btn-red { background: linear-gradient(135deg, #aa2222, #cc3333); color: white; }
+        .btn-sm { padding: 5px 12px; font-size: 11px; }
+        .card { background: rgba(255,255,255,0.06); backdrop-filter: blur(10px); border-radius: 30px; padding: 25px; margin-bottom: 25px; border: 1px solid rgba(255,215,0,0.2); }
+        
+        .auth-card { background: rgba(0,0,0,0.7); border-radius: 40px; padding: 45px; max-width: 520px; margin: 100px auto; border: 1px solid #ffd700; text-align: center; backdrop-filter: blur(15px); }
+        .auth-card h1 { color: #ffd700; margin-bottom: 30px; font-size: 42px; }
+        .auth-card input, .auth-card select { width: 100%; padding: 15px 20px; margin: 12px 0; border-radius: 60px; border: none; background: rgba(255,255,255,0.1); color: white; font-size: 15px; }
+        .auth-tabs { display: flex; gap: 15px; margin-bottom: 30px; }
+        .auth-tabs button { flex: 1; padding: 14px; background: rgba(255,255,255,0.15); color: white; border: none; border-radius: 60px; cursor: pointer; font-size: 16px; }
         .auth-tabs button.active { background: #ffd700; color: #000; }
-        .error { color: #ff8888; margin-top: 10px; }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: #28a745; padding: 12px 24px; border-radius: 40px; animation: fadeOut 3s forwards; z-index: 1000; }
-        @keyframes fadeOut { 0% { opacity:1; } 70% { opacity:1; } 100% { opacity:0; visibility:hidden; } }
-        @media (max-width: 768px) { .header { flex-direction: column; gap: 10px; } }
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .error { color: #ff8888; margin-top: 15px; }
+        
+        .fan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .fan-card { background: rgba(0,0,0,0.5); border-radius: 28px; padding: 20px; cursor: pointer; transition: all 0.35s; border-left: 6px solid #ffd700; }
+        .fan-card:hover { transform: translateY(-8px); background: rgba(255,215,0,0.12); }
+        .fan-name { font-size: 20px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .fan-edit { font-size: 14px; background: rgba(255,215,0,0.2); padding: 5px 12px; border-radius: 30px; cursor: pointer; }
+        .fan-edit:hover { background: #ffd700; color: #000; }
+        .submenu { display: none; margin-top: 20px; grid-template-columns: 1fr; animation: fadeInUp 0.4s; }
+        .submenu.open { display: block; }
+        @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+        .sub-item { background: rgba(0,0,0,0.6); border-radius: 22px; padding: 16px; margin-bottom: 15px; cursor: pointer; transition: 0.25s; border: 1px solid rgba(255,215,0,0.2); }
+        .sub-item:hover { transform: scale(1.01); background: rgba(255,215,0,0.15); }
+        .sub-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .sub-item-title { font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+        .edit-bolim { font-size: 12px; background: rgba(255,215,0,0.3); padding: 3px 10px; border-radius: 20px; cursor: pointer; }
+        .books-list { margin-top: 15px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 10px; }
+        .book-card { background: rgba(0,0,0,0.4); border-radius: 15px; padding: 12px; margin-bottom: 10px; display: flex; gap: 15px; align-items: center; }
+        .book-card img { width: 60px; height: 80px; object-fit: cover; border-radius: 10px; }
+        .book-info { flex: 1; }
+        .book-info h4 { font-size: 14px; margin-bottom: 5px; }
+        .book-info p { font-size: 11px; color: #aaa; }
+        .book-actions { display: flex; gap: 8px; }
+        
+        .progress-bar { width: 100%; background: #333; border-radius: 30px; height: 12px; margin: 18px 0; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ffd700, #ff8800); border-radius: 30px; transition: width 0.5s; }
+        
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(12px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: linear-gradient(135deg, #0a1a2f, #0a1525); max-width: 550px; width: 90%; border-radius: 40px; padding: 35px; border: 1px solid #ffd700; max-height: 85vh; overflow-y: auto; animation: modalPop 0.3s; }
+        @keyframes modalPop { from { opacity:0; transform: scale(0.9); } to { opacity:1; transform: scale(1); } }
+        body.light .modal-content { background: #fff; color: #1a1a2e; }
+        .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 30px; border: none; background: rgba(255,255,255,0.1); color: white; }
+        body.light .modal-content input { background: #f0f0f0; color: #1a1a2e; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 13px; }
+        .admin-table th, .admin-table td { padding: 12px 8px; border-bottom: 1px solid rgba(255,255,255,0.15); text-align: left; }
+        .lang-selector { display: flex; gap: 6px; background: rgba(0,0,0,0.4); padding: 5px 15px; border-radius: 50px; }
+        .lang-btn { background: none; border: none; color: white; cursor: pointer; padding: 6px 14px; border-radius: 40px; font-size: 13px; }
+        .lang-btn.active { background: #ffd700; color: #000; }
+        .toast { position: fixed; bottom: 35px; right: 35px; background: linear-gradient(135deg, #28a745, #1e7e34); padding: 12px 24px; border-radius: 60px; animation: slideIn 0.3s, fadeOut 3s 2.7s forwards; z-index: 1100; font-weight: bold; font-size: 14px; }
+        @keyframes slideIn { from { opacity:0; transform: translateX(50px); } to { opacity:1; transform: translateX(0); } }
+        @keyframes fadeOut { to { opacity:0; visibility:hidden; } }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; } .row-2 { grid-template-columns: 1fr; } .book-card { flex-direction: column; text-align: center; } }
     </style>
 </head>
 <body>
 <div class="container" id="app"></div>
 
 <script>
+    // ==================== SUPER ADMIN ====================
     const SUPER_LOGIN = "Kimyochi_9222";
     const SUPER_PASS = "+507Asal!?";
     
     let currentUser = null;
     let users = JSON.parse(localStorage.getItem('fan_users')) || [];
+    let admins = JSON.parse(localStorage.getItem('fan_admins')) || [];
+    let pendingTeachers = JSON.parse(localStorage.getItem('pending_teachers')) || [];
     let timeSpent = JSON.parse(localStorage.getItem('fan_time')) || {};
+    let news = JSON.parse(localStorage.getItem('news')) || [
+        { id: 1, title: "📢 25 ta fan qo'shildi!", content: "Endi saytimizda 25 ta fan mavjud. Har bir fan 7 ta bo'limga ega.", date: "2025-04-12" }
+    ];
+    let quizQuestions = JSON.parse(localStorage.getItem('quiz_questions')) || [
+        { id: 1, question: "1 + 1 = ?", options: ["1", "2", "3", "4"], correct: 1, points: 100 }
+    ];
+    let olympiadQuestions = JSON.parse(localStorage.getItem('olympiad_questions')) || [
+        { id: 1, question: "2 x 2 = ?", options: ["2", "3", "4", "5"], correct: 2, points: 200 }
+    ];
+    let quizResults = JSON.parse(localStorage.getItem('quiz_results')) || {};
+    let olympiadResults = JSON.parse(localStorage.getItem('olympiad_results')) || {};
+    let adRequests = JSON.parse(localStorage.getItem('ad_requests')) || [];
+    let bookSellRequests = JSON.parse(localStorage.getItem('book_sell_requests')) || [];
+    let cardInfo = JSON.parse(localStorage.getItem('card_info')) || {};
+    let userImages = JSON.parse(localStorage.getItem('user_images')) || {};
     let timer = null;
     
-    const fanlar = [
-        { nom: "📐 Matematika", bolimlar: ["Algebra", "Geometriya", "Trigonometriya", "Analiz", "Statistika", "Diskret", "Tarix"] },
-        { nom: "⚡ Fizika", bolimlar: ["Mexanika", "Optika", "Elektrodinamika", "Termodinamika", "Kvant", "Yadro", "Astrofizika"] },
-        { nom: "⚗️ Kimyo", bolimlar: ["Organik", "Anorganik", "Analitik", "Fizik", "Biokimyo", "Polimer", "Ekologik"] },
-        { nom: "🧬 Biologiya", bolimlar: ["Botanika", "Zoologiya", "Anatomiya", "Genetika", "Ekologiya", "Mikrobiologiya", "Biotexnologiya"] },
-        { nom: "💻 Informatika", bolimlar: ["Dasturlash", "Algoritmlar", "Ma'lumotlar", "Tarmoqlar", "AI", "Xavfsizlik", "Web"] },
-        { nom: "🌙 Astronomiya", bolimlar: ["Quyosh", "Sayyoralar", "Yulduzlar", "Galaktikalar", "Kosmologiya", "Teleskoplar", "Tarix"] },
-        { nom: "🌍 Geografiya", bolimlar: ["Fizik", "Iqtisodiy", "Siyosiy", "Kartografiya", "Geologiya", "Meteorologiya", "Ekologiya"] },
-        { nom: "📜 Tarix", bolimlar: ["Qadimgi", "O'rta asr", "Yangi", "O'zbekiston", "Jahon", "Arxeologiya", "Madaniyat"] },
-        { nom: "📊 Iqtisod", bolimlar: ["Mikro", "Makro", "Xalqaro", "Moliyaviy", "Mehnat", "Rivojlanish", "Tadbirkorlik"] },
-        { nom: "⚖️ Huquq", bolimlar: ["Konstitutsiya", "Fuqarolik", "Jinoyat", "Mehnat", "Xalqaro", "Solik", "Sud"] }
+    // 25 ta fan va 7 ta bo'lim
+    let fanNames = JSON.parse(localStorage.getItem('fan_names')) || {};
+    let bolimNames = JSON.parse(localStorage.getItem('bolim_names')) || {};
+    let bolimBooks = JSON.parse(localStorage.getItem('bolim_books')) || {}; // { "fanIdx_bolimIdx": [ {id, name, author, year, img, pdf} ] }
+    
+    const defaultFans = [
+        "Matematika", "Fizika", "Kimyo", "Biologiya", "Informatika",
+        "Astronomiya", "Geografiya", "Tarix", "Iqtisod", "Huquq",
+        "Psixologiya", "Tilshunoslik", "Adabiyot", "San'at", "Musiqa",
+        "Arxitektura", "Muhandislik", "Tibbiyot", "Agronomiya", "Ekologiya",
+        "Statistika", "Mantiq", "Etika", "Falsafa", "Pedagogika"
     ];
     
-    for (let i = 10; i < 25; i++) {
-        fanlar.push({ nom: "Fan " + (i+1), bolimlar: ["Bo'lim 1", "Bo'lim 2", "Bo'lim 3", "Bo'lim 4", "Bo'lim 5", "Bo'lim 6", "Bo'lim 7"] });
+    const defaultBolimlar = [
+        "Algebra", "Geometriya", "Trigonometriya", "Analiz", "Statistika", "Diskret", "Tarix"
+    ];
+    
+    function getFans() {
+        let fans = [];
+        for (let i = 0; i < 25; i++) {
+            fans.push({
+                nom: fanNames[i] || defaultFans[i],
+                bolimlar: []
+            });
+            for (let j = 0; j < 7; j++) {
+                let key = i + "_" + j;
+                fans[i].bolimlar.push(bolimNames[key] || defaultBolimlar[j]);
+            }
+        }
+        return fans;
     }
+    
+    function saveFanNames() { localStorage.setItem('fan_names', JSON.stringify(fanNames)); }
+    function saveBolimNames() { localStorage.setItem('bolim_names', JSON.stringify(bolimNames)); }
+    function saveBolimBooks() { localStorage.setItem('bolim_books', JSON.stringify(bolimBooks)); }
     
     function showToast(msg) {
         let toast = document.createElement('div');
         toast.className = 'toast';
-        toast.innerHTML = msg;
+        toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
     }
@@ -78,8 +160,8 @@
         let percent = Math.min(100, (data.minutes / 180) * 100);
         let bar = document.getElementById('progressFill');
         if (bar) bar.style.width = percent + '%';
-        let span = document.getElementById('timeDisplay');
-        if (span) span.innerHTML = `⏱️ Bugun: ${data.minutes} / 180 daqiqa`;
+        let timeSpan = document.getElementById('timeDisplay');
+        if (timeSpan) timeSpan.innerHTML = `<i class="fas fa-hourglass-half"></i> Bugun: ${data.minutes} / 180 daqiqa`;
         if (data.minutes >= 180 && !data.rewardGiven) {
             data.balance = (data.balance || 0) + 5000;
             data.rewardGiven = true;
@@ -90,7 +172,7 @@
     }
     
     function startTimer() {
-        if (!currentUser) return;
+        if (!currentUser || currentUser.role === 'pending') return;
         let data = timeSpent[currentUser.login] || { minutes: 0, lastDate: new Date().toDateString(), balance: 0, rewardGiven: false };
         let today = new Date().toDateString();
         if (data.lastDate !== today) {
@@ -119,86 +201,707 @@
         updateProgress();
     }
     
-    function renderHome() {
-        let html = `<div class="card"><h2>📚 Fanlar dunyosi</h2><div class="fan-grid" id="fanGrid"></div></div>`;
-        document.getElementById('pageContent').innerHTML = html;
-        let grid = document.getElementById('fanGrid');
-        for (let i = 0; i < fanlar.length; i++) {
-            let fan = fanlar[i];
-            let div = document.createElement('div');
-            div.className = 'fan-card';
-            div.innerHTML = `<div class="fan-name">${fan.nom} <span>▼</span></div><div class="submenu" id="sub-${i}"></div>`;
-            div.onclick = (function(idx) { return function(e) { e.stopPropagation(); document.getElementById('sub-'+idx).classList.toggle('open'); }; })(i);
-            let sub = div.querySelector('.submenu');
-            for (let j = 0; j < fan.bolimlar.length; j++) {
-                let b = fan.bolimlar[j];
-                let item = document.createElement('div');
-                item.className = 'sub-item';
-                item.innerHTML = `<strong>${b}</strong><br><small>📖 Dars</small>`;
-                item.onclick = (function(fn, bn) { return function(e) { e.stopPropagation(); alert(`📘 ${fn} / ${bn}\n\nBu bo'limda dars matni va video havola bo'ladi.`); }; })(fan.nom, b);
-                sub.appendChild(item);
-            }
-            grid.appendChild(div);
+    function isImageFile(url) {
+        return url && (url.includes('image') || url.includes('png') || url.includes('jpg') || url.includes('jpeg') || url.includes('gif'));
+    }
+    
+    // Kitob qo'shish modal
+    function showAddBookModal(fanIdx, bolimIdx, fanNom, bolimNom) {
+        let isAdmin = currentUser.role === 'superadmin' || currentUser.role === 'admin';
+        if (!isAdmin) return;
+        let books = bolimBooks[fanIdx + "_" + bolimIdx] || [];
+        if (books.length >= 50) {
+            showToast("❌ Maksimal 50 ta kitob qo'shish mumkin!");
+            return;
+        }
+        let modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2><i class="fas fa-book"></i> Kitob qo'shish - ${fanNom} / ${bolimNom}</h2>
+                <input type="text" id="bookName" placeholder="Kitob nomi">
+                <input type="text" id="bookAuthor" placeholder="Muallif">
+                <input type="text" id="bookYear" placeholder="Chiqgan yili">
+                <input type="text" id="bookImg" placeholder="Rasm URL (ixtiyoriy)">
+                <input type="text" id="bookPdf" placeholder="PDF havola (ixtiyoriy)">
+                <button class="btn" onclick="addBookToBolim(${fanIdx}, ${bolimIdx})"><i class="fas fa-save"></i> Qo'shish</button>
+                <button class="btn" onclick="this.closest('.modal').remove()">Bekor qilish</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.style.display = 'flex';
+    }
+    
+    window.addBookToBolim = function(fanIdx, bolimIdx) {
+        let name = document.getElementById('bookName').value;
+        let author = document.getElementById('bookAuthor').value;
+        let year = document.getElementById('bookYear').value;
+        let img = document.getElementById('bookImg').value;
+        let pdf = document.getElementById('bookPdf').value;
+        if (!name) { showToast("❌ Kitob nomini kiriting!"); return; }
+        let key = fanIdx + "_" + bolimIdx;
+        let books = bolimBooks[key] || [];
+        if (books.length >= 50) { showToast("❌ Maksimal 50 ta kitob!"); return; }
+        let newBook = {
+            id: Date.now(),
+            name: name,
+            author: author,
+            year: year,
+            img: img || "https://picsum.photos/100/120?random=" + Date.now(),
+            pdf: pdf
+        };
+        books.push(newBook);
+        bolimBooks[key] = books;
+        saveBolimBooks();
+        showToast("✅ Kitob qo'shildi! (" + books.length + "/50)");
+        document.querySelector('.modal')?.remove();
+        renderHome();
+    };
+    
+    window.deleteBook = function(fanIdx, bolimIdx, bookId) {
+        if (confirm("Kitobni o'chirishni xohlaysizmi?")) {
+            let key = fanIdx + "_" + bolimIdx;
+            let books = bolimBooks[key] || [];
+            books = books.filter(b => b.id !== bookId);
+            bolimBooks[key] = books;
+            saveBolimBooks();
+            showToast("✅ Kitob o'chirildi!");
+            renderHome();
+        }
+    };
+    
+    window.editBook = function(fanIdx, bolimIdx, bookId) {
+        let key = fanIdx + "_" + bolimIdx;
+        let books = bolimBooks[key] || [];
+        let book = books.find(b => b.id === bookId);
+        if (!book) return;
+        let modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2><i class="fas fa-edit"></i> Kitobni tahrirlash</h2>
+                <input type="text" id="editBookName" value="${book.name}" placeholder="Kitob nomi">
+                <input type="text" id="editBookAuthor" value="${book.author || ''}" placeholder="Muallif">
+                <input type="text" id="editBookYear" value="${book.year || ''}" placeholder="Chiqgan yili">
+                <input type="text" id="editBookImg" value="${book.img || ''}" placeholder="Rasm URL">
+                <input type="text" id="editBookPdf" value="${book.pdf || ''}" placeholder="PDF havola">
+                <button class="btn" onclick="saveEditedBook(${fanIdx}, ${bolimIdx}, ${bookId})"><i class="fas fa-save"></i> Saqlash</button>
+                <button class="btn" onclick="this.closest('.modal').remove()">Bekor</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.style.display = 'flex';
+    };
+    
+    window.saveEditedBook = function(fanIdx, bolimIdx, bookId) {
+        let key = fanIdx + "_" + bolimIdx;
+        let books = bolimBooks[key] || [];
+        let bookIndex = books.findIndex(b => b.id === bookId);
+        if (bookIndex === -1) return;
+        books[bookIndex] = {
+            id: bookId,
+            name: document.getElementById('editBookName').value,
+            author: document.getElementById('editBookAuthor').value,
+            year: document.getElementById('editBookYear').value,
+            img: document.getElementById('editBookImg').value || "https://picsum.photos/100/120",
+            pdf: document.getElementById('editBookPdf').value
+        };
+        bolimBooks[key] = books;
+        saveBolimBooks();
+        showToast("✅ Kitob yangilandi!");
+        document.querySelector('.modal')?.remove();
+        renderHome();
+    };
+    
+    function editFanName(fanIdx) {
+        if (currentUser.role !== 'superadmin') return;
+        let newName = prompt("Yangi fan nomi:", getFans()[fanIdx].nom);
+        if (newName) {
+            fanNames[fanIdx] = newName;
+            saveFanNames();
+            renderHome();
+            showToast("✅ Fan nomi o'zgartirildi!");
         }
     }
     
-    function renderNews() { document.getElementById('pageContent').innerHTML = `<div class="card"><h2>📰 Yangiliklar</h2><div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:20px;"><h3>📢 25 ta fan qo'shildi!</h3><p>Endi saytimizda 25 ta fan mavjud.</p></div></div>`; }
-    function renderQuiz() { document.getElementById('pageContent').innerHTML = `<div class="card"><h2>📝 Viktorinalar</h2><div style="text-align:center; padding:40px;"><p>Tez kunda!</p><button class="btn" onclick="showToast('Tez orada')">Test</button></div></div>`; }
-    function renderOlympiad() { document.getElementById('pageContent').innerHTML = `<div class="card"><h2>🏆 Olimpiadalar</h2><div style="background:rgba(0,0,0,0.3); padding:20px;"><h3>🏅 Matematika Olimpiadasi</h3><p>Sana: 15-may 2025 | 1.000.000 so'm</p><button class="btn" onclick="alert('Admin bilan bog\'laning')">Ro'yxat</button></div></div>`; }
-    function renderStats() { let d = timeSpent[currentUser.login] || { minutes:0, balance:0 }; document.getElementById('pageContent').innerHTML = `<div class="card"><h2>📊 Statistika</h2><p>📅 Bugun: ${d.minutes}/180 daqiqa</p><p>💰 Balans: ${d.balance || 0} so'm</p><button class="btn" onclick="alert('22-sanada')">💸 Pul yechish</button></div>`; }
-    function renderPartners() { let code = currentUser.login + "_" + Math.random().toString(36).substr(2,5).toUpperCase(); document.getElementById('pageContent').innerHTML = `<div class="card"><h2>🤝 Hamkorlik</h2><code style="display:block; background:#333; padding:15px; border-radius:15px;">${code}</code><button class="btn" onclick="navigator.clipboard.writeText('${code}')">📋 Nusxalash</button><p>Har bir taklif uchun 50 000 so'm!</p></div>`; }
-    function renderAdmin() { if(currentUser.role !== 'superadmin'){ document.getElementById('pageContent').innerHTML = `<div class="card"><p>🔒 Faqat Super admin!</p></div>`; return; } document.getElementById('pageContent').innerHTML = `<div class="card"><h2>⚙️ Admin panel</h2><p>👥 Foydalanuvchilar: ${users.length}</p><button class="btn" onclick="localStorage.clear(); location.reload()" style="background:#aa2222;">⚠️ Tozalash</button></div>`; }
+    function editBolimName(fanIdx, bolimIdx) {
+        if (currentUser.role !== 'superadmin') return;
+        let fans = getFans();
+        let currentName = fans[fanIdx].bolimlar[bolimIdx];
+        let newName = prompt("Yangi bo'lim nomi:", currentName);
+        if (newName) {
+            bolimNames[fanIdx + "_" + bolimIdx] = newName;
+            saveBolimNames();
+            renderHome();
+            showToast("✅ Bo'lim nomi o'zgartirildi!");
+        }
+    }
     
-    function showProfile() {
-        let img = localStorage.getItem('user_img_' + currentUser.login) || '';
-        let html = `<div class="card"><h2>👤 Profil</h2><div style="text-align:center;"><img src="${img || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}" style="width:100px; height:100px; border-radius:50%;"><br><input type="file" id="profileImg" accept="image/*"><button class="btn" onclick="uploadImg()">📸 Yuklash</button></div><input type="password" id="newPass" placeholder="Yangi parol"><button class="btn" onclick="changePass()">Parolni o'zgartirish</button></div>`;
+    function renderHome() {
+        let fans = getFans();
+        let html = `<div class="card"><h2 style="margin-bottom:20px;"><i class="fas fa-atom"></i> Fanlar dunyosi</h2><div class="fan-grid" id="fanGrid"></div></div>`;
+        document.getElementById('pageContent').innerHTML = html;
+        let grid = document.getElementById('fanGrid');
+        for (let i = 0; i < fans.length; i++) {
+            let fan = fans[i];
+            let fanDiv = document.createElement('div');
+            fanDiv.className = 'fan-card';
+            fanDiv.innerHTML = `
+                <div class="fan-name">
+                    ${fan.nom}
+                    ${currentUser?.role === 'superadmin' ? `<span class="fan-edit" onclick="event.stopPropagation(); editFanName(${i})"><i class="fas fa-pen"></i> O'zgartirish</span>` : ''}
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="submenu" id="sub-${i}"></div>
+            `;
+            fanDiv.onclick = (function(idx) {
+                return function(e) {
+                    e.stopPropagation();
+                    document.getElementById('sub-' + idx).classList.toggle('open');
+                };
+            })(i);
+            let subDiv = fanDiv.querySelector('.submenu');
+            for (let j = 0; j < 7; j++) {
+                let bolim = fan.bolimlar[j];
+                let key = i + "_" + j;
+                let books = bolimBooks[key] || [];
+                let isAdmin = currentUser?.role === 'superadmin' || currentUser?.role === 'admin';
+                
+                let booksHtml = '';
+                if (books.length > 0) {
+                    booksHtml = `<div class="books-list"><h4 style="margin-bottom:10px;"><i class="fas fa-book"></i> Kitoblar (${books.length}/50):</h4>`;
+                    for (let bk of books) {
+                        booksHtml += `
+                            <div class="book-card">
+                                <img src="${bk.img || 'https://picsum.photos/60/80'}" onerror="this.src='https://picsum.photos/60/80'">
+                                <div class="book-info">
+                                    <h4>${bk.name}</h4>
+                                    <p>${bk.author || ''} ${bk.year ? '(' + bk.year + ')' : ''}</p>
+                                    ${bk.pdf ? `<a href="${bk.pdf}" target="_blank" style="color:#ffd700; font-size:11px;"><i class="fas fa-file-pdf"></i> PDF o'qish</a>` : ''}
+                                </div>
+                                ${isAdmin ? `
+                                <div class="book-actions">
+                                    <button class="btn btn-sm" onclick="event.stopPropagation(); editBook(${i}, ${j}, ${bk.id})"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-red btn-sm" onclick="event.stopPropagation(); deleteBook(${i}, ${j}, ${bk.id})"><i class="fas fa-trash"></i></button>
+                                </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+                    booksHtml += `</div>`;
+                }
+                
+                let subItem = document.createElement('div');
+                subItem.className = 'sub-item';
+                subItem.innerHTML = `
+                    <div class="sub-item-header">
+                        <div class="sub-item-title">
+                            <i class="fas fa-folder-open"></i> ${bolim}
+                            ${currentUser?.role === 'superadmin' ? `<span class="edit-bolim" onclick="event.stopPropagation(); editBolimName(${i}, ${j})"><i class="fas fa-pen"></i> O'zgartirish</span>` : ''}
+                        </div>
+                        ${isAdmin ? `<button class="btn btn-sm" onclick="event.stopPropagation(); showAddBookModal(${i}, ${j}, '${fan.nom}', '${bolim}')"><i class="fas fa-plus"></i> Kitob qo'shish</button>` : ''}
+                    </div>
+                    <div style="font-size:13px; margin-top:5px; color:#aaa;">Ma'lumot uchun bosing</div>
+                    ${booksHtml}
+                `;
+                subItem.onclick = (function(fi, bj, fn, bn) {
+                    return function(e) {
+                        e.stopPropagation();
+                        showBolimInfoModal(fn, bn);
+                    };
+                })(i, j, fan.nom, bolim);
+                subDiv.appendChild(subItem);
+            }
+            grid.appendChild(fanDiv);
+        }
+    }
+    
+    function showBolimInfoModal(fanNom, bolimNom) {
+        let modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2><i class="fas fa-info-circle"></i> ${fanNom} / ${bolimNom}</h2>
+                <div style="margin:20px 0; padding:20px; background:rgba(0,0,0,0.3); border-radius:25px;">
+                    <p>Bu bo'limda ${fanNom} fanining ${bolimNom} bo'limi bo'yicha dars matni, video darslar va kitoblar joylashtirilgan.</p>
+                    <p style="margin-top:15px;">📚 Kitoblar yuqorida ro'yxat shaklida ko'rsatilgan.</p>
+                </div>
+                <button class="btn" onclick="this.closest('.modal').remove()"><i class="fas fa-times"></i> Yopish</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.style.display = 'flex';
+    }
+    
+    // ==================== QOLGAN FUNKSIYALAR (VIKTORINA, OLIMPIADA, STATISTIKA, HAMKORLIK, MONETIZATSIYA, ADMIN, PROFIL) ====================
+    
+    function renderQuiz() {
+        let isAdmin = currentUser.role === 'superadmin' || currentUser.role === 'admin';
+        let userResult = quizResults[currentUser?.login];
+        let html = `<div class="card"><h2><i class="fas fa-puzzle-piece"></i> Viktorinalar</h2>`;
+        if (!currentUser) {
+            html += `<div style="text-align:center; padding:30px;"><p>Test topshirish uchun ro'yxatdan o'ting!</p><button class="btn" onclick="showAuth()">Ro'yxatdan o'tish</button></div>`;
+        } else if (userResult?.completed) {
+            html += `<div style="text-align:center; padding:30px;"><i class="fas fa-check-circle" style="font-size:50px; color:#28a745;"></i><h3>Natijangiz: ${userResult.score} ball</h3><button class="btn" onclick="resetQuiz()">Qayta topshirish</button></div>`;
+        } else {
+            html += `<div id="quizContainer"></div><button class="btn" id="submitQuizBtn" style="margin-top:20px;">Yakunlash</button>`;
+            document.getElementById('pageContent').innerHTML = html;
+            let container = document.getElementById('quizContainer');
+            let qHtml = '';
+            for (let i = 0; i < quizQuestions.length; i++) {
+                qHtml += `<div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:25px; margin-top:15px;" id="quizQBox${i}">
+                    <div style="font-weight:bold;">${quizQuestions[i].question}</div>
+                    <div id="quizOptions${i}">
+                        ${quizQuestions[i].options.map((opt, oi) => `<div class="quiz-option" style="padding:10px; margin:8px 0; background:rgba(255,255,255,0.1); border-radius:30px; cursor:pointer;" onclick="selectQuizAnswer(${i}, ${oi}, this)">${opt}</div>`).join('')}
+                    </div>
+                    <div id="quizResult${i}" style="margin-top:8px;"></div>
+                </div>`;
+            }
+            container.innerHTML = qHtml;
+            window.quizAnswers = {};
+            window.quizLocked = {};
+            window.selectQuizAnswer = function(qIdx, optIdx, element) {
+                if (window.quizLocked[qIdx]) { showToast("⚠️ Siz bu savolga allaqachon javob bergansiz!"); return; }
+                let isCorrect = (optIdx === quizQuestions[qIdx].correct);
+                let resultDiv = document.getElementById(`quizResult${qIdx}`);
+                if (isCorrect) { resultDiv.innerHTML = '<span style="color:#88ff88;"><i class="fas fa-check-circle"></i> To\'g\'ri javob!</span>'; window.quizAnswers[qIdx] = optIdx; }
+                else { resultDiv.innerHTML = `<span style="color:#ff8888;"><i class="fas fa-times-circle"></i> Xato! To\'g\'ri javob: ${quizQuestions[qIdx].options[quizQuestions[qIdx].correct]}</span>`; }
+                let optionsDiv = document.getElementById(`quizOptions${qIdx}`);
+                optionsDiv.querySelectorAll('.quiz-option').forEach(opt => { opt.style.pointerEvents = 'none'; opt.style.opacity = '0.5'; });
+                window.quizLocked[qIdx] = true;
+            };
+            document.getElementById('submitQuizBtn').onclick = function() {
+                let totalScore = 0;
+                for (let i = 0; i < quizQuestions.length; i++) if (window.quizAnswers[i] === quizQuestions[i].correct) totalScore += quizQuestions[i].points;
+                quizResults[currentUser.login] = { score: totalScore, completed: true };
+                localStorage.setItem('quiz_results', JSON.stringify(quizResults));
+                let timeData = timeSpent[currentUser.login] || { balance: 0 };
+                timeData.balance += totalScore;
+                timeSpent[currentUser.login] = timeData;
+                localStorage.setItem('fan_time', JSON.stringify(timeSpent));
+                showToast(`🎉 Natija: ${totalScore} ball!`);
+                renderQuiz();
+            };
+            return;
+        }
+        if (isAdmin) {
+            html += `<h3>➕ Yangi savol</h3><input type="text" id="newQ" placeholder="Savol"><div class="row-2"><input type="text" id="opt1" placeholder="Javob 1"><input type="text" id="opt2" placeholder="Javob 2"></div><div class="row-2"><input type="text" id="opt3" placeholder="Javob 3"><input type="text" id="opt4" placeholder="Javob 4"></div><select id="correctOpt"><option value="0">Javob 1</option><option value="1">Javob 2</option><option value="2">Javob 3</option><option value="3">Javob 4</option></select><input type="number" id="qPoints" placeholder="Ball" value="100"><button class="btn" onclick="addQuiz()">Qo'shish</button>`;
+        }
+        html += `</div>`;
         document.getElementById('pageContent').innerHTML = html;
     }
     
-    window.uploadImg = function() {
+    window.addQuiz = function() {
+        let question = document.getElementById('newQ').value;
+        let options = [document.getElementById('opt1').value, document.getElementById('opt2').value, document.getElementById('opt3').value, document.getElementById('opt4').value];
+        let correct = parseInt(document.getElementById('correctOpt').value);
+        let points = parseInt(document.getElementById('qPoints').value);
+        if (!question || options.some(o => !o)) { showToast("❌ Barcha maydonlarni to'ldiring!"); return; }
+        quizQuestions.push({ id: Date.now(), question, options, correct, points });
+        localStorage.setItem('quiz_questions', JSON.stringify(quizQuestions));
+        showToast("✅ Savol qo'shildi!");
+        renderQuiz();
+    };
+    
+    window.resetQuiz = function() { delete quizResults[currentUser.login]; localStorage.setItem('quiz_results', JSON.stringify(quizResults)); renderQuiz(); };
+    
+    function renderOlympiad() {
+        let isAdmin = currentUser.role === 'superadmin' || currentUser.role === 'admin';
+        let userResult = olympiadResults[currentUser?.login];
+        let html = `<div class="card"><h2><i class="fas fa-trophy"></i> Olimpiadalar</h2>`;
+        if (!currentUser) {
+            html += `<div style="text-align:center; padding:30px;"><p>Test topshirish uchun ro'yxatdan o'ting!</p><button class="btn" onclick="showAuth()">Ro'yxatdan o'tish</button></div>`;
+        } else if (userResult?.completed) {
+            html += `<div style="text-align:center; padding:30px;"><i class="fas fa-medal" style="font-size:50px; color:#ffd700;"></i><h3>Natijangiz: ${userResult.score} ball</h3><button class="btn" onclick="resetOlympiad()">Qayta topshirish</button></div>`;
+        } else {
+            html += `<div id="olympiadContainer"></div><button class="btn" id="submitOlympiadBtn" style="margin-top:20px;">Yakunlash</button>`;
+            document.getElementById('pageContent').innerHTML = html;
+            let container = document.getElementById('olympiadContainer');
+            let qHtml = '';
+            for (let i = 0; i < olympiadQuestions.length; i++) {
+                qHtml += `<div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:25px; margin-top:15px;" id="olympiadQBox${i}">
+                    <div style="font-weight:bold;">${olympiadQuestions[i].question}</div>
+                    <div id="olympiadOptions${i}">
+                        ${olympiadQuestions[i].options.map((opt, oi) => `<div class="olympiad-option" style="padding:10px; margin:8px 0; background:rgba(255,255,255,0.1); border-radius:30px; cursor:pointer;" onclick="selectOlympiadAnswer(${i}, ${oi}, this)">${opt}</div>`).join('')}
+                    </div>
+                    <div id="olympiadResult${i}" style="margin-top:8px;"></div>
+                </div>`;
+            }
+            container.innerHTML = qHtml;
+            window.olympiadAnswers = {};
+            window.olympiadLocked = {};
+            window.selectOlympiadAnswer = function(qIdx, optIdx, element) {
+                if (window.olympiadLocked[qIdx]) { showToast("⚠️ Siz bu savolga allaqachon javob bergansiz!"); return; }
+                let isCorrect = (optIdx === olympiadQuestions[qIdx].correct);
+                let resultDiv = document.getElementById(`olympiadResult${qIdx}`);
+                if (isCorrect) { resultDiv.innerHTML = '<span style="color:#88ff88;"><i class="fas fa-check-circle"></i> To\'g\'ri javob!</span>'; window.olympiadAnswers[qIdx] = optIdx; }
+                else { resultDiv.innerHTML = `<span style="color:#ff8888;"><i class="fas fa-times-circle"></i> Xato! To\'g\'ri javob: ${olympiadQuestions[qIdx].options[olympiadQuestions[qIdx].correct]}</span>`; }
+                let optionsDiv = document.getElementById(`olympiadOptions${qIdx}`);
+                optionsDiv.querySelectorAll('.olympiad-option').forEach(opt => { opt.style.pointerEvents = 'none'; opt.style.opacity = '0.5'; });
+                window.olympiadLocked[qIdx] = true;
+            };
+            document.getElementById('submitOlympiadBtn').onclick = function() {
+                let totalScore = 0;
+                for (let i = 0; i < olympiadQuestions.length; i++) if (window.olympiadAnswers[i] === olympiadQuestions[i].correct) totalScore += olympiadQuestions[i].points;
+                olympiadResults[currentUser.login] = { score: totalScore, completed: true };
+                localStorage.setItem('olympiad_results', JSON.stringify(olympiadResults));
+                let timeData = timeSpent[currentUser.login] || { balance: 0 };
+                timeData.balance += totalScore;
+                timeSpent[currentUser.login] = timeData;
+                localStorage.setItem('fan_time', JSON.stringify(timeSpent));
+                showToast(`🏆 Natija: ${totalScore} ball!`);
+                renderOlympiad();
+            };
+            return;
+        }
+        if (isAdmin) {
+            html += `<h3>➕ Yangi savol</h3><input type="text" id="newOQ" placeholder="Savol"><div class="row-2"><input type="text" id="oOpt1" placeholder="Javob 1"><input type="text" id="oOpt2" placeholder="Javob 2"></div><div class="row-2"><input type="text" id="oOpt3" placeholder="Javob 3"><input type="text" id="oOpt4" placeholder="Javob 4"></div><select id="oCorrect"><option value="0">Javob 1</option><option value="1">Javob 2</option><option value="2">Javob 3</option><option value="3">Javob 4</option></select><input type="number" id="oPoints" placeholder="Ball" value="200"><button class="btn" onclick="addOlympiad()">Qo'shish</button>`;
+        }
+        html += `</div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    window.addOlympiad = function() {
+        let question = document.getElementById('newOQ').value;
+        let options = [document.getElementById('oOpt1').value, document.getElementById('oOpt2').value, document.getElementById('oOpt3').value, document.getElementById('oOpt4').value];
+        let correct = parseInt(document.getElementById('oCorrect').value);
+        let points = parseInt(document.getElementById('oPoints').value);
+        if (!question || options.some(o => !o)) { showToast("❌ Barcha maydonlarni to'ldiring!"); return; }
+        olympiadQuestions.push({ id: Date.now(), question, options, correct, points });
+        localStorage.setItem('olympiad_questions', JSON.stringify(olympiadQuestions));
+        showToast("✅ Savol qo'shildi!");
+        renderOlympiad();
+    };
+    
+    window.resetOlympiad = function() { delete olympiadResults[currentUser.login]; localStorage.setItem('olympiad_results', JSON.stringify(olympiadResults)); renderOlympiad(); };
+    
+    function renderNews() {
+        let isAdmin = currentUser.role === 'superadmin' || currentUser.role === 'admin';
+        let newsHtml = `<div class="card"><h2><i class="fas fa-newspaper"></i> Yangiliklar</h2>`;
+        for (let n of news) {
+            newsHtml += `
+                <div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:25px; margin-top:15px;">
+                    <h3>${n.title}</h3>
+                    <p>${n.content}</p>
+                    <p style="color:#aaa; font-size:12px; margin-top:10px;"><i class="far fa-calendar-alt"></i> ${n.date}</p>
+                    ${isAdmin ? `<button class="btn btn-red" onclick="deleteNews(${n.id})" style="margin-top:10px;"><i class="fas fa-trash"></i> O'chirish</button>` : ''}
+                </div>
+            `;
+        }
+        if (isAdmin) {
+            newsHtml += `
+                <h3 style="margin-top:25px;"><i class="fas fa-plus-circle"></i> Yangi yangilik qo'shish</h3>
+                <input type="text" id="newsTitle" placeholder="Sarlavha" style="width:100%; padding:12px; border-radius:30px;">
+                <textarea id="newsContent" rows="3" placeholder="Matn" style="width:100%; padding:12px; border-radius:25px; margin-top:10px;"></textarea>
+                <button class="btn" onclick="addNews()" style="margin-top:10px;"><i class="fas fa-save"></i> Qo'shish</button>
+            `;
+        }
+        newsHtml += `</div>`;
+        document.getElementById('pageContent').innerHTML = newsHtml;
+    }
+    
+    window.addNews = function() {
+        let title = document.getElementById('newsTitle').value;
+        let content = document.getElementById('newsContent').value;
+        if (!title || !content) { showToast("❌ Sarlavha va matnni kiriting!"); return; }
+        let newId = news.length ? Math.max(...news.map(n => n.id)) + 1 : 2;
+        news.push({ id: newId, title, content, date: new Date().toISOString().split('T')[0] });
+        localStorage.setItem('news', JSON.stringify(news));
+        showToast("✅ Yangilik qo'shildi!");
+        renderNews();
+    };
+    
+    window.deleteNews = function(id) {
+        news = news.filter(n => n.id !== id);
+        localStorage.setItem('news', JSON.stringify(news));
+        showToast("✅ Yangilik o'chirildi!");
+        renderNews();
+    };
+    
+    function renderStats() {
+        let html = `<div class="card"><h2><i class="fas fa-chart-line"></i> Statistika</h2>
+        <input type="text" id="searchStats" placeholder="🔍 Qidiruv..." onkeyup="searchStats()" style="width:100%; padding:12px; border-radius:30px; margin-bottom:20px;">
+        <table class="admin-table" id="statsTable"><tr><th>Ism</th><th>Familiya</th><th>Login</th><th>Parol</th><th>Karta</th><th>Balans</th><th>Vaqt</th></tr>`;
+        for (let u of users) {
+            let card = cardInfo[u.login] || {};
+            let time = timeSpent[u.login] || { balance: 0, minutes: 0 };
+            html += `<tr><td>${u.name || ''}</td><td>${u.surname || ''}</td><td>${u.login}</td><td>${u.password}</td><td>${card.cardNumber || '-'}</td><td>${time.balance || 0} so'm</td><td>${time.minutes || 0} min</td></tr>`;
+        }
+        html += `<\/table><button class="btn" onclick="exportToExcel()" style="margin-top:15px;"><i class="fas fa-file-excel"></i> Excel hisobot</button><\/div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    window.searchStats = function() {
+        let search = document.getElementById('searchStats').value.toLowerCase();
+        let rows = document.querySelectorAll('#statsTable tr');
+        for (let i = 1; i < rows.length; i++) rows[i].style.display = rows[i].innerText.toLowerCase().includes(search) ? '' : 'none';
+    };
+    
+    window.exportToExcel = function() {
+        let html = document.getElementById('statsTable').outerHTML;
+        let blob = new Blob([html], {type: 'application/vnd.ms-excel'});
+        let link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'fanuz_statistika.xls';
+        link.click();
+        showToast("✅ Hisobot yuklab olindi!");
+    };
+    
+    function renderPartners() {
+        let promoCode = currentUser?.promoCode || currentUser?.login + "_" + Math.random().toString(36).substr(2,6).toUpperCase();
+        let invitedCount = currentUser?.promoCode ? users.filter(u => u.refPromo === currentUser.promoCode).length : 0;
+        let card = cardInfo[currentUser?.login] || {};
+        let html = `<div class="card"><h2><i class="fas fa-handshake"></i> Hamkorlik</h2>
+        <div style="background:rgba(0,0,0,0.3); border-radius:25px; padding:20px; text-align:center;">
+            <p><strong>Promokodingiz:</strong></p>
+            <code style="display:inline-block; background:#333; padding:12px 25px; border-radius:50px; font-size:20px;">${promoCode}</code>
+            <button class="btn" onclick="navigator.clipboard.writeText('${promoCode}')"><i class="fas fa-copy"></i> Nusxalash</button>
+            <p style="margin-top:15px;"><i class="fas fa-users"></i> Sizning taklifingiz bilan <strong>${invitedCount}</strong> ta odam ro'yxatdan o'tgan!</p>
+            <p><i class="fas fa-gift"></i> Har bir taklif uchun <strong>50 000 so'm</strong> bonus!</p>
+        </div>
+        <hr><h3><i class="fas fa-credit-card"></i> Karta ma'lumotlari</h3>
+        <input type="text" id="cardNumber" placeholder="16 xonalik karta raqami" maxlength="16" value="${card.cardNumber || ''}">
+        <div class="row-2"><input type="text" id="cardName" placeholder="Ismingiz" value="${card.name || ''}"><input type="text" id="cardSurname" placeholder="Familiyangiz" value="${card.surname || ''}"></div>
+        <button class="btn" onclick="saveCard()"><i class="fas fa-save"></i> Saqlash</button>
+        <hr><h3><i class="fas fa-ad"></i> Reklama so'rovi</h3>
+        <textarea id="adPurpose" rows="3" placeholder="Reklama maqsadi..."></textarea><button class="btn" onclick="sendAd()">Yuborish</button>
+        <hr><h3><i class="fas fa-book"></i> Kitob sotish so'rovi</h3>
+        <textarea id="bookPurpose" rows="3" placeholder="Kitob haqida ma'lumot..."></textarea><button class="btn" onclick="sendBook()">Yuborish</button>
+        </div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    window.saveCard = function() {
+        let cardNumber = document.getElementById('cardNumber').value;
+        let name = document.getElementById('cardName').value;
+        let surname = document.getElementById('cardSurname').value;
+        if (!cardNumber || cardNumber.length !== 16) { showToast("❌ 16 xonalik karta raqam kiriting!"); return; }
+        cardInfo[currentUser.login] = { cardNumber, name, surname };
+        localStorage.setItem('card_info', JSON.stringify(cardInfo));
+        showToast("✅ Karta saqlandi!");
+    };
+    
+    window.sendAd = function() {
+        let purpose = document.getElementById('adPurpose').value;
+        if (!purpose) { showToast("❌ Maqsadni kiriting!"); return; }
+        adRequests.push({ user: currentUser.login, purpose, date: new Date().toISOString() });
+        localStorage.setItem('ad_requests', JSON.stringify(adRequests));
+        showToast("✅ So'rov yuborildi!");
+        document.getElementById('adPurpose').value = '';
+    };
+    
+    window.sendBook = function() {
+        let purpose = document.getElementById('bookPurpose').value;
+        if (!purpose) { showToast("❌ Ma'lumot kiriting!"); return; }
+        bookSellRequests.push({ user: currentUser.login, purpose, date: new Date().toISOString() });
+        localStorage.setItem('book_sell_requests', JSON.stringify(bookSellRequests));
+        showToast("✅ So'rov yuborildi!");
+        document.getElementById('bookPurpose').value = '';
+    };
+    
+    function renderMonetization() {
+        if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') {
+            document.getElementById('pageContent').innerHTML = `<div class="card"><p>🔒 Ruxsat yo'q!</p></div>`;
+            return;
+        }
+        let html = `<div class="card"><h2><i class="fas fa-coins"></i> Monetizatsiya</h2><table class="admin-table"><tr><th>Login</th><th>Ism</th><th>Balans</th><th>Pul o'tkazish</th></tr>`;
+        for (let u of users) {
+            let time = timeSpent[u.login] || { balance: 0 };
+            html += `<tr><td>${u.login}</td><td>${u.name || ''}</td><td id="bal-${u.login}">${time.balance || 0} so'm</td><td><input type="number" id="amt-${u.login}" placeholder="Miqdor"><button class="btn" onclick="transfer('${u.login}')">O'tkazish</button></td></tr>`;
+        }
+        html += `<\/table><\/div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    window.transfer = function(login) {
+        let amount = parseInt(document.getElementById(`amt-${login}`).value);
+        if (!amount || amount <= 0) { showToast("❌ Miqdor kiriting!"); return; }
+        let time = timeSpent[login] || { balance: 0 };
+        if (time.balance < amount) { showToast("❌ Balans yetarli emas!"); return; }
+        time.balance -= amount;
+        timeSpent[login] = time;
+        localStorage.setItem('fan_time', JSON.stringify(timeSpent));
+        document.getElementById(`bal-${login}`).innerHTML = time.balance + " so'm";
+        showToast(`✅ ${login} ga ${amount} so'm o'tkazildi!`);
+    };
+    
+    function renderAdminPanel() {
+        if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') {
+            document.getElementById('pageContent').innerHTML = `<div class="card"><p>🔒 Ruxsat yo'q!</p></div>`;
+            return;
+        }
+        let pendingHtml = '';
+        for (let p of pendingTeachers) {
+            pendingHtml += `<tr><td>${p.name} ${p.surname}</td><td>${p.login}</td><td>${p.email}</td><td><button class="btn" onclick="approveTeacher('${p.login}')">Tasdiqlash</button> <button class="btn btn-red" onclick="rejectTeacher('${p.login}')">Bekor</button></td></tr>`;
+        }
+        let adHtml = '';
+        for (let a of adRequests) {
+            adHtml += `<tr><td>${a.user}</td><td>${a.purpose}</td><td>${new Date(a.date).toLocaleDateString()}</td><td><button class="btn" onclick="deleteAd('${a.user}')">Ko'rildi</button></td></tr>`;
+        }
+        let bookHtml = '';
+        for (let br of bookSellRequests) {
+            bookHtml += `<tr><td>${br.user}</td><td>${br.purpose}</td><td>${new Date(br.date).toLocaleDateString()}</td><td><button class="btn" onclick="deleteBookReq('${br.user}')">Ko'rildi</button></td></tr>`;
+        }
+        let adminHtml = '';
+        if (currentUser.role === 'superadmin') {
+            for (let a of admins) {
+                adminHtml += `<tr><td>${a.name}</td><td>${a.login}</td><td>${a.status === 'active' ? '✅ Faol' : '❌ Nofaol'}</td><td><button class="btn" onclick="toggleAdmin('${a.login}')">O'zgartirish</button> <button class="btn btn-red" onclick="deleteAdmin('${a.login}')">O'chirish</button></td></tr>`;
+            }
+        }
+        let html = `<div class="card"><h2><i class="fas fa-crown"></i> Admin paneli</h2>
+        <h3>⏳ Tasdiqlanmagan o'qituvchilar</h3><table class="admin-table"><tr><th>Ism</th><th>Login</th><th>Email</th><th>Harakat</th></tr>${pendingHtml || '<tr><td colspan="4">Yo\'q</td></tr>'}<\/table>
+        <h3>📢 Reklama so'rovlari</h3><table class="admin-table"><tr><th>Foydalanuvchi</th><th>Maqsad</th><th>Sana</th><th>Harakat</th></tr>${adHtml || '<tr><td colspan="4">Yo\'q</td></tr>'}<\/table>
+        <h3>📚 Kitob sotish so'rovlari</h3><table class="admin-table"><tr><th>Foydalanuvchi</th><th>Ma'lumot</th><th>Sana</th><th>Harakat</th></tr>${bookHtml || '<tr><td colspan="4">Yo\'q</td></tr>'}<\/table>`;
+        if (currentUser.role === 'superadmin') {
+            html += `<h3>👨‍💼 Adminlar</h3><button class="btn" onclick="addNewAdmin()">➕ Yangi admin</button><table class="admin-table"><tr><th>Ism</th><th>Login</th><th>Holat</th><th>Harakat</th></tr>${adminHtml}<\/table>`;
+        }
+        html += `<button class="btn btn-red" onclick="clearAll()" style="margin-top:20px;">⚠️ Barcha ma'lumotlarni tozalash</button><\/div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    window.approveTeacher = function(login) {
+        let teacher = pendingTeachers.find(t => t.login === login);
+        if (teacher) {
+            teacher.status = 'approved';
+            users.push(teacher);
+            pendingTeachers = pendingTeachers.filter(t => t.login !== login);
+            localStorage.setItem('fan_users', JSON.stringify(users));
+            localStorage.setItem('pending_teachers', JSON.stringify(pendingTeachers));
+            showToast("✅ O'qituvchi tasdiqlandi!");
+            renderAdminPanel();
+        }
+    };
+    
+    window.rejectTeacher = function(login) {
+        pendingTeachers = pendingTeachers.filter(t => t.login !== login);
+        localStorage.setItem('pending_teachers', JSON.stringify(pendingTeachers));
+        showToast("❌ Bekor qilindi!");
+        renderAdminPanel();
+    };
+    
+    window.deleteAd = function(user) {
+        adRequests = adRequests.filter(r => r.user !== user);
+        localStorage.setItem('ad_requests', JSON.stringify(adRequests));
+        renderAdminPanel();
+    };
+    
+    window.deleteBookReq = function(user) {
+        bookSellRequests = bookSellRequests.filter(r => r.user !== user);
+        localStorage.setItem('book_sell_requests', JSON.stringify(bookSellRequests));
+        renderAdminPanel();
+    };
+    
+    window.addNewAdmin = function() {
+        let login = prompt("Admin login:");
+        let pass = prompt("Admin parol:");
+        let name = prompt("Admin ismi:");
+        if (login && pass && name) {
+            admins.push({ login, password: pass, name, status: 'active' });
+            localStorage.setItem('fan_admins', JSON.stringify(admins));
+            showToast("✅ Admin qo'shildi!");
+            renderAdminPanel();
+        }
+    };
+    
+    window.toggleAdmin = function(login) {
+        let admin = admins.find(a => a.login === login);
+        if (admin) admin.status = admin.status === 'active' ? 'inactive' : 'active';
+        localStorage.setItem('fan_admins', JSON.stringify(admins));
+        renderAdminPanel();
+    };
+    
+    window.deleteAdmin = function(login) {
+        admins = admins.filter(a => a.login !== login);
+        localStorage.setItem('fan_admins', JSON.stringify(admins));
+        renderAdminPanel();
+    };
+    
+    window.clearAll = function() {
+        if (confirm("HAMMA MA'LUMOTLAR O'CHIRILADI! Davom etasizmi?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    };
+    
+    function showProfile() {
+        let user = users.find(u => u.login === currentUser.login) || { name: '', surname: '', middlename: '', email: '', birthdate: '' };
+        let img = userImages[currentUser.login] || '';
+        let html = `<div class="card"><h2><i class="fas fa-user-circle"></i> Mening profilim</h2>
+        <div style="text-align:center;"><img src="${img || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}" style="width:120px; height:120px; border-radius:50%;"><br><input type="file" id="profileImg" accept="image/*"><button class="btn" onclick="uploadProfile()"><i class="fas fa-upload"></i> Yuklash</button></div>
+        <div class="row-2"><input type="text" id="editName" value="${user.name || ''}" placeholder="Ism"><input type="text" id="editSurname" value="${user.surname || ''}" placeholder="Familiya"></div>
+        <input type="text" id="editMiddlename" value="${user.middlename || ''}" placeholder="Sharfi">
+        <input type="date" id="editBirthdate" value="${user.birthdate || ''}">
+        <input type="email" id="editEmail" value="${user.email || ''}" placeholder="Email">
+        <input type="password" id="editPassword" placeholder="Yangi parol">
+        <button class="btn" onclick="updateProfile()"><i class="fas fa-save"></i> Saqlash</button>
+        </div>`;
+        document.getElementById('pageContent').innerHTML = html;
+    }
+    
+    window.uploadProfile = function() {
         let file = document.getElementById('profileImg').files[0];
-        if (file && file.size <= 2*1024*1024) {
+        if (file && file.size <= 2 * 1024 * 1024) {
             let reader = new FileReader();
-            reader.onload = e => { localStorage.setItem('user_img_' + currentUser.login, e.target.result); showToast("✅ Rasm yangilandi!"); showProfile(); };
+            reader.onload = e => { userImages[currentUser.login] = e.target.result; localStorage.setItem('user_images', JSON.stringify(userImages)); showToast("✅ Rasm yangilandi!"); showProfile(); };
             reader.readAsDataURL(file);
         } else showToast("❌ 2MB dan kichik rasm tanlang!");
     };
     
-    window.changePass = function() {
-        let newPass = document.getElementById('newPass').value;
-        if (newPass) {
-            if (currentUser.role === 'superadmin') { alert("Super admin parolini o'zgartirish mumkin emas!"); return; }
-            let user = users.find(u => u.login === currentUser.login);
-            if (user) user.password = newPass;
+    window.updateProfile = function() {
+        let user = users.find(u => u.login === currentUser.login);
+        if (user) {
+            user.name = document.getElementById('editName').value;
+            user.surname = document.getElementById('editSurname').value;
+            user.middlename = document.getElementById('editMiddlename').value;
+            user.birthdate = document.getElementById('editBirthdate').value;
+            user.email = document.getElementById('editEmail').value;
+            let newPass = document.getElementById('editPassword').value;
+            if (newPass) user.password = newPass;
             localStorage.setItem('fan_users', JSON.stringify(users));
-            showToast("✅ Parol yangilandi!");
+            showToast("✅ Profil yangilandi!");
+            showProfile();
         }
     };
     
-    function showPage(p) {
-        if (p === 'home') renderHome(); else if (p === 'news') renderNews(); else if (p === 'quiz') renderQuiz();
-        else if (p === 'olympiad') renderOlympiad(); else if (p === 'stats') renderStats();
-        else if (p === 'partners') renderPartners(); else if (p === 'admin') renderAdmin();
-        else if (p === 'profile') showProfile();
+    function showPage(page) {
+        if (page === 'home') renderHome();
+        else if (page === 'news') renderNews();
+        else if (page === 'quiz') renderQuiz();
+        else if (page === 'olympiad') renderOlympiad();
+        else if (page === 'stats') renderStats();
+        else if (page === 'partners') renderPartners();
+        else if (page === 'monetization') renderMonetization();
+        else if (page === 'admin') renderAdminPanel();
+        else if (page === 'profile') showProfile();
     }
     
-    function showMain() {
-        let role = currentUser.role === 'superadmin' ? '👑 Super Admin' : '👤 Foydalanuvchi';
-        let img = localStorage.getItem('user_img_' + currentUser.login) || '';
-        let adminLink = currentUser.role === 'superadmin' ? '<a onclick="showPage(\'admin\')">⚙️ Admin</a>' : '';
+    function showMainApp() {
+        let roleText = currentUser.role === 'superadmin' ? '👑 Super Admin' : (currentUser.role === 'admin' ? '⚙️ Admin' : '👤 Foydalanuvchi');
+        let img = userImages[currentUser.login] || '';
+        let adminLink = (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? '<a onclick="showPage(\'admin\')"><i class="fas fa-cog"></i> Admin</a>' : '';
+        let monetLink = (currentUser.role === 'superadmin' || currentUser.role === 'admin') ? '<a onclick="showPage(\'monetization\')"><i class="fas fa-coins"></i> Monetizatsiya</a>' : '';
+        
         let html = `
-            <div class="header">
-                <div class="logo">📘 Fan.uz</div>
-                <div class="user-badge"><img src="${img || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}" style="width:30px; height:30px; border-radius:50%;"> ${role}: ${currentUser.login}</div>
-            </div>
-            <div class="nav">
-                <a onclick="showPage('home')">🏠 Bosh</a> <a onclick="showPage('news')">📰 Yangiliklar</a>
-                <a onclick="showPage('quiz')">📝 Viktorinalar</a> <a onclick="showPage('olympiad')">🏆 Olimpiadalar</a>
-                <a onclick="showPage('stats')">📊 Statistika</a> <a onclick="showPage('partners')">🤝 Hamkorlik</a>
-                <a onclick="showPage('profile')">👤 Profil</a> ${adminLink} <a onclick="logout()">🚪 Chiqish</a>
+            <div class="navbar">
+                <div class="logo"><i class="fas fa-graduation-cap"></i> Fan.uz</div>
+                <div class="nav-links">
+                    <a onclick="showPage('home')"><i class="fas fa-home"></i> Bosh</a>
+                    <a onclick="showPage('news')"><i class="fas fa-newspaper"></i> Yangiliklar</a>
+                    <a onclick="showPage('quiz')"><i class="fas fa-puzzle-piece"></i> Viktorinalar</a>
+                    <a onclick="showPage('olympiad')"><i class="fas fa-trophy"></i> Olimpiadalar</a>
+                    <a onclick="showPage('stats')"><i class="fas fa-chart-line"></i> Statistika</a>
+                    <a onclick="showPage('partners')"><i class="fas fa-handshake"></i> Hamkorlik</a>
+                    <a onclick="showPage('profile')"><i class="fas fa-user"></i> Profil</a>
+                    ${adminLink}
+                    ${monetLink}
+                    <a onclick="logout()"><i class="fas fa-sign-out-alt"></i> Chiqish</a>
+                    <div class="lang-selector"><button class="lang-btn active" onclick="setLang('uz')">UZ</button><button class="lang-btn" onclick="setLang('ru')">RU</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+                    <button onclick="toggleDarkMode()" class="nav-btn"><i class="fas fa-moon"></i></button>
+                </div>
+                <div class="user-badge"><img src="${img || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}"> ${roleText}: ${currentUser.login}</div>
             </div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <div style="text-align:center; margin-bottom:15px;" id="timeDisplay">⏱️ Bugun: 0 / 180 daqiqa</div>
+            <div style="text-align:center; margin-bottom:20px;" id="timeDisplay"><i class="fas fa-hourglass-half"></i> Bugun: 0 / 180 daqiqa</div>
             <div id="pageContent"></div>
         `;
         document.getElementById('app').innerHTML = html;
@@ -206,12 +909,15 @@
         renderHome();
     }
     
+    // ==================== AUTH ====================
     function showAuth() {
         document.getElementById('app').innerHTML = `
             <div class="auth-card">
-                <h1>📘 Fan.uz</h1>
+                <h1><i class="fas fa-graduation-cap"></i> Fan.uz</h1>
                 <div class="auth-tabs"><button id="tabLogin" class="active" onclick="toggleAuth('login')">Kirish</button><button id="tabReg" onclick="toggleAuth('register')">Ro'yxatdan o'tish</button></div>
                 <div id="authForm"></div>
+                <div class="lang-selector" style="justify-content:center; margin-top:20px;"><button class="lang-btn active" onclick="setLang('uz')">UZ</button><button class="lang-btn" onclick="setLang('ru')">RU</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+                <button onclick="toggleDarkMode()" style="margin-top:15px; background:none; border:1px solid #ffd700; padding:8px 20px; border-radius:30px;"><i class="fas fa-moon"></i></button>
             </div>
         `;
         toggleAuth('login');
@@ -219,12 +925,17 @@
     
     window.toggleAuth = function(type) {
         let container = document.getElementById('authForm');
-        document.getElementById('tabLogin').classList.toggle('active', type==='login');
-        document.getElementById('tabReg').classList.toggle('active', type==='register');
+        document.getElementById('tabLogin').classList.toggle('active', type === 'login');
+        document.getElementById('tabReg').classList.toggle('active', type === 'register');
         if (type === 'login') {
             container.innerHTML = `<input type="text" id="loginName" placeholder="Login"><input type="password" id="loginPass" placeholder="Parol"><button class="btn" onclick="doLogin()">Kirish</button><div id="authError" class="error"></div>`;
         } else {
-            container.innerHTML = `<input type="text" id="regName" placeholder="Ism"><input type="text" id="regSurname" placeholder="Familiya"><input type="email" id="regEmail" placeholder="Email"><input type="text" id="regLogin" placeholder="Login"><input type="password" id="regPass" placeholder="Parol"><select id="regType"><option value="student">O'quvchi</option><option value="teacher">O'qituvchi</option></select><button class="btn" onclick="doRegister()">Ro'yxatdan o'tish</button><div id="authError" class="error"></div>`;
+            container.innerHTML = `<div class="row-2"><input type="text" id="regName" placeholder="Ism"><input type="text" id="regSurname" placeholder="Familiya"></div>
+            <input type="text" id="regMiddlename" placeholder="Sharfi"><div class="row-2"><input type="date" id="regBirthdate"><select id="regGender"><option>Erkak</option><option>Ayol</option></select></div>
+            <input type="text" id="regPassport" placeholder="Pasport"><input type="email" id="regEmail" placeholder="Email">
+            <input type="text" id="regLogin" placeholder="Login"><input type="password" id="regPass" placeholder="Parol">
+            <select id="regType"><option value="student">O'quvchi</option><option value="teacher">O'qituvchi</option></select>
+            <input type="text" id="refPromo" placeholder="Taklif kodi"><button class="btn" onclick="doRegister()">Ro'yxatdan o'tish</button><div id="authError" class="error"></div>`;
         }
     };
     
@@ -232,9 +943,11 @@
         let login = document.getElementById('loginName').value;
         let pass = document.getElementById('loginPass').value;
         let err = document.getElementById('authError');
-        if (login === SUPER_LOGIN && pass === SUPER_PASS) { currentUser = { login: SUPER_LOGIN, role: 'superadmin' }; showMain(); return; }
-        let user = users.find(u => u.login === login && u.password === pass);
-        if (user) { currentUser = { login: user.login, role: 'user' }; showMain(); return; }
+        if (login === SUPER_LOGIN && pass === SUPER_PASS) { currentUser = { login: SUPER_LOGIN, role: 'superadmin' }; showMainApp(); return; }
+        let admin = admins.find(a => a.login === login && a.password === pass && a.status === 'active');
+        if (admin) { currentUser = { login: admin.login, role: 'admin' }; showMainApp(); return; }
+        let user = users.find(u => u.login === login && u.password === pass && u.status === 'approved');
+        if (user) { currentUser = { login: user.login, role: 'user', promoCode: user.promoCode }; showMainApp(); return; }
         err.innerHTML = "❌ Login yoki parol xato!";
     };
     
@@ -243,24 +956,47 @@
         let pass = document.getElementById('regPass').value;
         let name = document.getElementById('regName').value;
         let surname = document.getElementById('regSurname').value;
+        let middlename = document.getElementById('regMiddlename').value;
+        let birthdate = document.getElementById('regBirthdate').value;
         let email = document.getElementById('regEmail').value;
         let type = document.getElementById('regType').value;
+        let refPromo = document.getElementById('refPromo').value;
         let err = document.getElementById('authError');
         if (!login || !pass || !name || !surname || !email) { err.innerHTML = "❌ Barcha maydonlarni to'ldiring!"; return; }
-        if (users.find(u => u.login === login)) { err.innerHTML = "❌ Bu login band!"; return; }
-        if (login === SUPER_LOGIN) { err.innerHTML = "❌ Bu login band!"; return; }
-        let promo = login + "_" + Math.random().toString(36).substr(2,5).toUpperCase();
-        users.push({ login, password: pass, name, surname, email, type, promoCode: promo });
-        localStorage.setItem('fan_users', JSON.stringify(users));
-        timeSpent[login] = { minutes:0, balance:0 };
-        localStorage.setItem('fan_time', JSON.stringify(timeSpent));
-        err.innerHTML = "✅ Ro'yxatdan o'tdingiz! Endi kiring.";
-        err.style.color = "#88ff88";
+        if (users.find(u => u.login === login) || pendingTeachers.find(t => t.login === login)) { err.innerHTML = "❌ Login band!"; return; }
+        if (login === SUPER_LOGIN) { err.innerHTML = "❌ Login band!"; return; }
+        let promoCode = login + "_" + Math.random().toString(36).substr(2,6).toUpperCase();
+        let newUser = { login, password: pass, name, surname, middlename, birthdate, email, type, promoCode, refPromo, status: type === 'teacher' ? 'pending' : 'approved' };
+        if (type === 'teacher') {
+            pendingTeachers.push(newUser);
+            localStorage.setItem('pending_teachers', JSON.stringify(pendingTeachers));
+            err.innerHTML = "✅ Admin tasdiqlagandan keyin kirasiz!";
+            err.style.color = "#88ff88";
+        } else {
+            users.push(newUser);
+            localStorage.setItem('fan_users', JSON.stringify(users));
+            timeSpent[login] = { minutes: 0, balance: 0 };
+            localStorage.setItem('fan_time', JSON.stringify(timeSpent));
+            err.innerHTML = "✅ Ro'yxatdan o'tdingiz! Endi kiring.";
+            err.style.color = "#88ff88";
+            if (refPromo) {
+                let inviter = users.find(u => u.promoCode === refPromo);
+                if (inviter) {
+                    let invTime = timeSpent[inviter.login] || { balance: 0 };
+                    invTime.balance += 1000;
+                    timeSpent[inviter.login] = invTime;
+                    localStorage.setItem('fan_time', JSON.stringify(timeSpent));
+                    showToast(`🎉 +1000 so'm taklif bonusi!`);
+                }
+            }
+        }
         setTimeout(() => toggleAuth('login'), 2000);
     };
     
-    window.logout = function() { currentUser = null; if(timer) clearInterval(timer); showAuth(); };
-    
+    window.logout = function() { currentUser = null; if (timer) clearInterval(timer); showAuth(); };
+    window.setLang = function(lang) { showToast(lang.toUpperCase() + " tili tanlandi"); };
+    window.toggleDarkMode = function() { document.body.classList.toggle('light'); localStorage.setItem('darkMode', document.body.classList.contains('light')); };
+    if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('light');
     showAuth();
 </script>
 </body>
